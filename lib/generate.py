@@ -1,20 +1,23 @@
-import os
-import yaml
 import logging
+import os
+import tempfile
+from pathlib import Path
+
+from validate import load_schema, load_yaml, validate_yaml
 
 # Configure Logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-yaml_file_path = os.path.join(project_root, 'personal-security-checklist.yml')
-markdown_file_path = os.path.join(project_root, 'CHECKLIST.md')
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+YAML_FILE_PATH = PROJECT_ROOT / "personal-security-checklist.yml"
+MARKDOWN_FILE_PATH = PROJECT_ROOT / "CHECKLIST.md"
+SCHEMA_PATH = PROJECT_ROOT / "lib" / "schema.json"
 
 
-def read_yaml(file_path):
-    logger.info(f"Reading YAML file from {file_path}...")
-    with open(file_path, 'r') as file:
-        return yaml.safe_load(file)
+def read_yaml(file_path: Path):
+    logger.info("Reading YAML file from %s...", file_path)
+    return load_yaml(file_path)
 
 def generate_markdown_section(section):
     markdown = f"## {section['title']}\n\n"
@@ -33,32 +36,50 @@ def generate_markdown_section(section):
     
     return markdown
 
-def insert_markdown_content(md_file_path, new_content):
+def insert_markdown_content(md_file_path: Path, new_content: str):
     start_marker, end_marker = "<!-- checklist-start -->", "<!-- checklist-end -->"
-    logger.info(f"Inserting generated markdown into {md_file_path} between markers...")
-    
-    with open(md_file_path, 'r') as file:
-        content = file.read()
-    
+    logger.info("Inserting generated markdown into %s between markers...", md_file_path)
+
+    content = md_file_path.read_text(encoding="utf-8")
+
     start_index = content.find(start_marker)
     end_index = content.find(end_marker, start_index)
-    
+
     if start_index == -1 or end_index == -1:
-        logger.error("Markers not found in the markdown file.")
+        raise ValueError("Checklist markers not found in the markdown file.")
+    if end_index < start_index:
+        raise ValueError("Checklist markers are out of order in the markdown file.")
+
+    updated_content = (
+        content[: start_index + len(start_marker)]
+        + "\n"
+        + new_content
+        + "\n"
+        + content[end_index:]
+    )
+
+    if updated_content == content:
+        logger.info("Markdown already up to date. No changes written.")
         return
-    
-    updated_content = content[:start_index + len(start_marker)] + "\n" + new_content + "\n" + content[end_index:]
-    
-    with open(md_file_path, 'w') as file:
-        file.write(updated_content)
+
+    with tempfile.NamedTemporaryFile("w", encoding="utf-8", delete=False, dir=md_file_path.parent) as handle:
+        handle.write(updated_content)
+        temp_path = Path(handle.name)
+
+    os.replace(temp_path, md_file_path)
     logger.info("Markdown content successfully inserted.")
 
 def main():
-    yaml_data = read_yaml(yaml_file_path)
+    yaml_data = read_yaml(YAML_FILE_PATH)
+    schema = load_schema(SCHEMA_PATH)
+    errors = validate_yaml(yaml_data, schema)
+    if errors:
+        raise SystemExit("YAML schema validation failed. Aborting markdown generation.")
+
     markdown_content = ""
     for section in yaml_data:
         markdown_content += generate_markdown_section(section) + "\n\n"
-    insert_markdown_content(markdown_file_path, markdown_content)
+    insert_markdown_content(MARKDOWN_FILE_PATH, markdown_content)
     logger.info("Script completed successfully!")
 
 if __name__ == "__main__":
