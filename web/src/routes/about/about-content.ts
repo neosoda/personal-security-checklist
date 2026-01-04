@@ -1,64 +1,64 @@
 export const intro = [
-  `The objective of this project is to give you practical guidance on how to improve your digital security, and protect your privacy online.`,
+  `L’objectif de ce projet est de vous fournir des conseils pratiques pour améliorer votre sécurité numérique et protéger votre vie privée en ligne.`,
   `
-  The checklist is a living document, and will be updated regularly to reflect the latest threats and best practices.
-  This is made possible by open sourcing the content, and making it a community maintained resource,
-  meaning that anyone can suggest changes, make additions or update the guidance.
-  All edits are then reviewed by maintainers before being merged and going live.
+  La checklist est un document vivant, mis à jour régulièrement pour refléter les dernières menaces et bonnes pratiques.
+  Cela est possible grâce à l’ouverture du contenu et à sa maintenance par la communauté,
+  ce qui permet à chacun de proposer des changements, d’ajouter du contenu ou de mettre à jour les recommandations.
+  Toutes les modifications sont ensuite relues par les mainteneurs avant publication.
   `];
 
 export const contributing = [
-  `This project is only possible thanks to contributors like you!`,
-  `You can make changes to any of the checklist content, by editing `
+  `Ce projet est possible grâce à des contributeurs comme vous !`,
+  `Vous pouvez modifier le contenu de la checklist en éditant `
   + `[\`personal-security-checklist.yml\`](https://github.com/Lissy93/personal-security-checklist/blob/master/personal-security-checklist.yml)`,
 ];
 
 export const projects = [
   {
     title: 'Web-Check',
-    description: 'OSINT tool for analysing any website',
+    description: 'Outil OSINT pour analyser n’importe quel site web',
     icon: 'https://icon.horse/icon/web-check.xyz',
     link: 'https://github.com/lissy93/web-check',
   },
   {
     title: 'Dashy',
-    description: 'Dashboard app, for organising your self-hosted services',
+    description: 'App de tableau de bord pour organiser vos services auto-hébergés',
     icon: 'https://dashy.to/img/dashy.png',
     link: 'https://github.com/lissy93/dashy',
   },
   {
     title: 'Email Comparison',
-    description: 'Objective comparison of private/secure mail providers',
+    description: 'Comparatif objectif des fournisseurs de messagerie privés/sécurisés',
     icon: 'https://email-comparison.as93.net/favicon.png',
     link: 'https://github.com/lissy93/email-comparison',
   },
   {
     title: 'Awesome Privacy',
-    description: 'A list of privacy-respscting software and services',
+    description: 'Une liste de logiciels et services respectueux de la vie privée',
     icon: 'https://awesome-privacy.xyz/awesome-privacy.png',
     link: 'https://github.com/lissy93/awesome-privacy',
   },
   {
     title: 'Portainer-Templates',
-    description: 'Compiled repository of 1-click Docker apps for self-hosting',
+    description: 'Répertoire compilé d’apps Docker auto-hébergées en 1 clic',
     icon: 'https://portainer-templates.as93.net/favicon.png',
     link: 'https://github.com/lissy93/portainer-templates',
   },
   {
     title: 'AdGuardian',
-    description: 'CLI tool for monitoring your networks traffic and AdGuard DNS stats',
+    description: 'Outil CLI pour suivre le trafic réseau et les stats DNS AdGuard',
     icon: 'https://adguardian.as93.net/favicon.png',
     link: 'https://github.com/lissy93/adguardian-term',
   },
   {
     title: 'Bug-Bounties',
-    description: 'Database of websites which accept responsible vulnerability discolsure',
+    description: 'Base de données de sites acceptant la divulgation responsable de failles',
     icon: 'https://bug-bounties.as93.net/favicon.png',
     link: 'https://github.com/lissy93/bug-bounties',
   },
   {
     title: 'Git-In',
-    description: 'Tools and resources to help beginners get into open source',
+    description: 'Outils et ressources pour aider les débutants à se lancer dans l’open source',
     icon: 'https://www.git-in.to/favicon.png',
     link: 'https://github.com/lissy93/git-in',
   },

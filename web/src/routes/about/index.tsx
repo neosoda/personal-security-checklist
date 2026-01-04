@@ -24,7 +24,7 @@ export default component$(() => {
     const url = 'https://api.github.com/repos/lissy93/personal-security-checklist/contributors?per_page=100';
     const response = await fetch(url);
     if (!response.ok) {
-      throw new Error('Failed to fetch contributors');
+      throw new Error('Échec de la récupération des contributeurs');
     }
     return await response.json();
   });
@@ -33,7 +33,7 @@ export default component$(() => {
     const url = 'https://github-sponsors.as93.workers.dev/lissy93';
     const response = await fetch(url);
     if (!response.ok) {
-      throw new Error('Failed to fetch sponsors');
+      throw new Error('Échec de la récupération des sponsors');
     }
     return await response.json();
   });
@@ -42,7 +42,7 @@ export default component$(() => {
   return (
     <div class="m-4 md:mx-16">
       <article class="bg-back p-8 mx-auto max-w-[1200px] m-8 rounded-lg shadow-md">
-        <h2 class="text-3xl mb-2">About the Security Checklist</h2>
+        <h2 class="text-3xl mb-2">À propos de la checklist de sécurité</h2>
         {intro.map((paragraph, index) => (
           <p class="mb-2" key={index}>{paragraph}</p>
         ))}        
@@ -50,7 +50,7 @@ export default component$(() => {
       <div class="divider"></div>
 
       <article class="bg-back p-8 mx-auto max-w-[1200px] m-8 rounded-lg shadow-md">
-        <h2 class="text-3xl mb-2">Contributing</h2>
+        <h2 class="text-3xl mb-2">Contribuer</h2>
         {contributing.map((paragraph, index) => (
           <p class="mb-2" key={index} dangerouslySetInnerHTML={parseMarkdown(paragraph)}></p>
         ))}        
@@ -58,19 +58,19 @@ export default component$(() => {
       <div class="divider"></div>
 
       <article class="bg-back p-8 mx-auto max-w-[1200px] m-8 rounded-lg shadow-md">
-        <h2 class="text-3xl mb-2">Acknowledgments</h2>
+        <h2 class="text-3xl mb-2">Remerciements</h2>
 
 
         <h3 class="text-2xl mb-2">Sponsors</h3>
 
         <p>
-          Huge thanks to the following sponsors, for their ongoing support 💖
+          Un immense merci aux sponsors suivants pour leur soutien continu 💖
         </p>
 
         <div class="flex flex-wrap gap-4 my-4 mx-auto">
           <Resource
               value={sponsorsResource}
-              onPending={() => <p>Loading...</p>}
+              onPending={() => <p>Chargement...</p>}
               onResolved={(contributors: Contributor[]) => (
                 contributors.map((contributor: Contributor) => (
                   <a
@@ -79,7 +79,7 @@ export default component$(() => {
                     target="_blank"
                     rel="noopener noreferrer"
                     key={contributor.login}
-                    data-tip={`Thank you @${contributor.login}`}
+                    data-tip={`Merci @${contributor.login}`}
                   >
                     <img
                       class="avatar rounded"
@@ -98,15 +98,15 @@ export default component$(() => {
 
         <div class="divider"></div>
 
-        <h3 class="text-2xl mb-2">Contributors</h3>
+        <h3 class="text-2xl mb-2">Contributeurs</h3>
         <p>
-          This project exists thanks to all the people who've helped build and maintain it.<br />
-          Special thanks to the below, top-100 contributors 🌟
+          Ce projet existe grâce à toutes les personnes qui ont aidé à le construire et à le maintenir.<br />
+          Merci tout particulièrement aux 100 principaux contributeurs 🌟
         </p>
         <div class="flex flex-wrap gap-4 my-4 mx-auto">
           <Resource
             value={contributorsResource}
-            onPending={() => <p>Loading...</p>}
+            onPending={() => <p>Chargement...</p>}
             onResolved={(contributors: Contributor[]) => (
               contributors.map((contributor: Contributor) => (
                 <a
@@ -115,7 +115,7 @@ export default component$(() => {
                   target="_blank"
                   rel="noopener noreferrer"
                   key={contributor.login}
-                  data-tip={`@${contributor.login} has contributed ${contributor.contributions} times\n\nClick to view their profile`}
+                  data-tip={`@${contributor.login} a contribué ${contributor.contributions} fois\n\nCliquez pour voir son profil`}
                 >
                   <img
                     class="avatar rounded"
@@ -136,11 +136,11 @@ export default component$(() => {
       <div class="divider"></div>
 
       <article class="bg-back p-8 mx-auto max-w-[1200px] my-8 rounded-lg shadow-md">
-        <h2 class="text-3xl mb-2" id="author">About the Author</h2>
+        <h2 class="text-3xl mb-2" id="author">À propos de l’autrice</h2>
           <p>
-            This project was originally started by
-            me, <a href="https://aliciasykes.com" class="link link-primary">Alicia Sykes</a>
-            - with a lot of help from the community.
+            Ce projet a été initialement lancé par
+            moi, <a href="https://aliciasykes.com" class="link link-primary">Alicia Sykes</a>,
+            avec beaucoup d’aide de la communauté.
           </p>
           <br />
           <div class="ml-4 float-right">
@@ -156,12 +156,12 @@ export default component$(() => {
             </div>
           </div>
           <p class="text-lg italic font-thin">
-            I write apps which aim to help people <b>escape big tech, secure their data, and protect their privacy</b>.
+            Je crée des apps qui aident à <b>échapper aux géants du numérique, sécuriser ses données et protéger sa vie privée</b>.
           </p>
           <br />
           <p>
-            I have a particular interest in self-hosting, Linux, security and OSINT.<br />
-            So if this type of stuff interests you, check out these other projects:
+            J’ai un intérêt particulier pour l’auto-hébergement, Linux, la sécurité et l’OSINT.<br />
+            Si ce type de sujet vous intéresse, voici d’autres projets :
           </p>
           <ul class="list-disc pl-8">
             {
@@ -177,9 +177,9 @@ export default component$(() => {
           </ul>
           <br />
           <p>
-            For a more open source apps I've published,
+            Pour découvrir davantage d’apps open source que j’ai publiées,
             see <a href="https://apps.aliciasykes.com/" class="link link-primary">apps.aliciasykes.com</a>,
-            or <a href="https://github.com/lissy93" class="link link-primary">follow me on GitHub</a>
+            ou <a href="https://github.com/lissy93" class="link link-primary">suivez-moi sur GitHub</a>
           </p>
 
       </article>
@@ -187,14 +187,14 @@ export default component$(() => {
       <div class="divider"></div>
 
       <article class="bg-back p-8 mx-auto max-w-[1200px] m-8 rounded-lg shadow-md">
-        <h2 class="text-3xl mb-2">License</h2>
+        <h2 class="text-3xl mb-2">Licence</h2>
         <p>
-          This project is split-licensed, with the checklist content (located
-          in <a class="link" href="https://github.com/Lissy93/personal-security-checklist/blob/HEAD/personal-security-checklist.yml">
+          Ce projet est sous double licence, avec le contenu de la checklist (situé
+          dans <a class="link" href="https://github.com/Lissy93/personal-security-checklist/blob/HEAD/personal-security-checklist.yml">
             <code>personal-security-checklist.yml</code>
           </a>) being licensed
           under <b><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></b>.
-          And everything else (including all the code), licensed
+          Et tout le reste (y compris tout le code) est sous licence
           under <b><a href="https://gist.github.com/Lissy93/143d2ee01ccc5c052a17">MIT</a></b>.
         </p>
         <pre class="bg-front whitespace-break-spaces rounded text-xs my-2 mx-auto p-2">
@@ -202,17 +202,17 @@ export default component$(() => {
         </pre>
         <details class="collapse">
           <summary class="collapse-title">
-            <h3 class="mt-2">What does this means for you?</h3>
+            <h3 class="mt-2">Qu’est-ce que cela signifie pour vous ?</h3>
           </summary>
           <div class="collapse-content">
             <p class="mb-2">
-              This means that for everything (except the checklist YAML file), you have almost unlimited freedom to
-              use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of this software.
-              All that we ask is that you include the original copyright notice and permission notice in any copies of the software
+              Cela signifie que pour tout (sauf le fichier YAML de la checklist), vous avez une liberté quasi illimitée pour
+              utiliser, copier, modifier, fusionner, publier, distribuer, concéder des sous-licences et/ou vendre des copies de ce logiciel.
+              Nous demandons simplement d’inclure l’avis de copyright et l’avis de permission d’origine dans toute copie du logiciel.
             </p>
             <p class="mb-2">
-              And for the security-list content you can share and adapt this content as long as you give appropriate credit,
-              don't use it for commercial purposes, and distribute your contributions under the same license.
+              Et pour le contenu de la checklist, vous pouvez le partager et l’adapter tant que vous créditez correctement,
+              n’en faites pas un usage commercial et publiez vos contributions sous la même licence.
             </p>
           </div>
         </details>
@@ -224,11 +224,11 @@ export default component$(() => {
 });
 
 export const head: DocumentHead = {
-  title: "About | Digital Defense",
+  title: "À propos | Défense numérique",
   meta: [
     {
       name: "description",
-      content: "This project aims to give you practical guidance on how to improve your digital security, and protect your privacy online",
+      content: "Ce projet vise à fournir des conseils pratiques pour améliorer votre sécurité numérique et protéger votre vie privée en ligne",
     },
   ],
 };
