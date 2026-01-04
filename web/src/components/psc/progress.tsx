@@ -12,6 +12,12 @@ import Icon from '~/components/core/icon';
  * calculates percentage completion for each priority level,
  * and renders some pretty pie charts to visualize results
  */
+const priorityLabels: Record<string, string> = {
+  essential: 'Essentiel',
+  optional: 'Optionnel',
+  advanced: 'Avancé',
+};
+
 export default component$(() => {
 
   // All checklist data, from store
@@ -28,6 +34,7 @@ export default component$(() => {
   const radarChart  = useSignal<HTMLCanvasElement>();
   // Completion data for each section
   const sectionCompletion =  useSignal<number[]>([]);
+
 
   /**
    * Calculates the users progress over specified sections.
@@ -202,7 +209,7 @@ export default component$(() => {
       return Promise.all(sections.map(section => calculatePercentage(section, priority)))
         .then(data => ({
           ...datasetTemplate,
-          label: priority.charAt(0).toUpperCase() + priority.slice(1),
+          label: priorityLabels[priority] || priority,
           data: data,
           backgroundColor: color,
         }));
@@ -262,7 +269,7 @@ export default component$(() => {
               },
               tooltip: {
                 callbacks: {
-                  label: (ctx) => `Completed ${Math.round(ctx.parsed.r)}% of ${ctx.dataset.label || ''} items`,
+                  label: (ctx) => `Terminé ${Math.round(ctx.parsed.r)} % des éléments ${ctx.dataset.label || ''}`,
                 }
               }
             },
@@ -274,9 +281,9 @@ export default component$(() => {
   }));
 
   const items = [
-    { id: 'essential-container', label: 'Essential' },
-    { id: 'optional-container', label: 'Optional' },
-    { id: 'advanced-container', label: 'Advanced' },
+    { id: 'essential-container', label: 'Essentiel' },
+    { id: 'optional-container', label: 'Optionnel' },
+    { id: 'advanced-container', label: 'Avancé' },
   ];
 
   // Beware, some god-awful markup ahead (thank Tailwind for that!)
@@ -290,19 +297,19 @@ export default component$(() => {
         <button
           class="absolute top-1 right-1 btn btn-sm opacity-50"
           onClick$={() => setIgnoreDialog(true)}
-          >Close</button>
-        <p class="text-xl block text-center font-bold">No stats yet</p>
-        <p class="w-md text-left my-2">You'll see your progress here, once you start ticking items off the checklists</p>
-        <p class="w-md text-left my-2">Get started, by selecting a checklist below</p>
+          >Fermer</button>
+        <p class="text-xl block text-center font-bold">Aucune statistique pour l’instant</p>
+        <p class="w-md text-left my-2">Votre progression apparaîtra ici dès que vous cocherez des éléments</p>
+        <p class="w-md text-left my-2">Commencez en sélectionnant une checklist ci-dessous</p>
       </div>
     )}
 
     <div class="flex justify-center flex-col items-center gap-6">
       {/* Progress Percent */}
       <div class="rounded-box bg-front shadow-md w-96 p-4">
-        <h3 class="text-primary text-2xl">Your Progress</h3>
+        <h3 class="text-primary text-2xl">Votre progression</h3>
         <p class="text-lg">
-          You've completed <b>{totalProgress.value.completed} out of {totalProgress.value.outOf}</b> items
+          Vous avez terminé <b>{totalProgress.value.completed} sur {totalProgress.value.outOf}</b> éléments
         </p>
         <progress
           class="progress w-80"
@@ -326,12 +333,12 @@ export default component$(() => {
       {/* Something ??? */}
       <div class="p-4 rounded-box bg-front shadow-md w-96 flex-grow">
         <p class="text-sm opacity-80 mb-2">
-          Next up, consider switching to more secure and
-          privacy-respecting apps and services.
+          Ensuite, envisagez de passer à des applications et services plus sûrs
+          et respectueux de la vie privée.
         </p>
         <p class="text-lg">
-          View our directory of recommended software,
-          at <a class="link link-secondary font-bold" href="https://awesome-privacy.xyz">awesome-privacy.xyz</a>
+          Consultez notre annuaire de logiciels recommandés sur
+          <a class="link link-secondary font-bold" href="https://awesome-privacy.xyz"> awesome-privacy.xyz</a>
         </p>
       </div>
     </div>
@@ -353,7 +360,7 @@ export default component$(() => {
                     'my-2 w-80 flex justify-between items-center tooltip transition',
                     `hover:text-${section.color}-400`
                   ]}
-                  data-tip={`Completed ${sectionCompletion.value[index]}% of ${section.checklist.length} items.`}
+                  data-tip={`Terminé ${sectionCompletion.value[index]} % des ${section.checklist.length} éléments.`}
                 >
                 <p class="text-sm m-0 flex items-center text-left gap-1 text-nowrap overflow-hidden max-w-40">
                   <Icon icon={section.icon} width={14} />
@@ -373,4 +380,3 @@ export default component$(() => {
   </div>
   );
 });
-

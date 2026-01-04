@@ -1,10 +1,9 @@
 
-This is the source for the https://digital-defense.io website, which displays the checklist data interactively
+Voici le code source du site https://digital-defense.io, qui affiche la checklist de façon interactive.
 
-For build, development and deploy instructions, see the main README
+Pour les instructions de build, développement et déploiement, voir le README principal.
 
-If you wish to make content changes, the only file you need to edit is `personal-security-checklist.yml`, in the repo's root
+Pour modifier le contenu, le seul fichier à éditer est `personal-security-checklist.yml`, à la racine du dépôt.
 
-All code here is licensed under MIT
-
+Tout le code ici est sous licence MIT.
 

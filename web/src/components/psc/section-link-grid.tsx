@@ -58,11 +58,11 @@ export default component$((props: { sections: Section[] }) => {
             <Icon icon={section.icon || 'star'} color={section.color} />
             {(done.value && done.value[index]) ? (
               <p class={`text-${section.color}-400 pt-2 pb-0 px-0 mx-0 my-0`}>
-                {done.value[index]}/{section.checklist.length} Done
+                {done.value[index]}/{section.checklist.length} terminés
               </p>
             ) : (
               <p class={`text-${section.color}-400 pt-2 pb-0 px-0 mx-0 my-0`}>
-                {section.checklist.length} Items
+                {section.checklist.length} éléments
               </p>
             )}
           </div>
@@ -80,7 +80,7 @@ export default component$((props: { sections: Section[] }) => {
               </div>
             ) : (
               <span class="absolute right-2 top-2 opacity-30 text-xs">
-                Not yet started
+                Pas encore commencé
               </span>
             )}
           </div>
